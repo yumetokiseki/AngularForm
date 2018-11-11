@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -6,10 +7,27 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  @ViewChild('f') form;
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  // 可以直接抓表單內容(ViewChild)
+  @ViewChild('f') form;
+  cityTownAreaSource;
+
+  citys;
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.http.get('/assets/data/cityarea.json').subscribe(data => {
+      this.cityTownAreaSource = data;
+      this.citys = Object.keys(data);
+
+      // console.log(data);
+      console.log(this.citys);
+    });
+  }
 
   submitForm(f) {
     // 可以用 ViewChild 直接抓但不建議
