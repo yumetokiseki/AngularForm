@@ -104,15 +104,37 @@
       <div class="col-sm-10">
         <div class="row">
           <div class="col">
-            <select id="inputState" class="form-control">
+            <select
+              id="inputState"
+              ngModel
+              name="city"
+              [ngModel]="city"
+              class="form-control"
+              (ngModelChange)="changeCity($event)"
+            >
               <option selected>請選擇縣市</option>
-              <option *ngFor="let city of this.citys">{{ city }}</option>
+              <option *ngFor="let city of this.citys">{{ city }} </option>
             </select>
+
+            <!-- 方法一 -->
+            <!-- (change)="changeCity($event)" -->
+
+            <!-- 方法二 -->
+            <!-- #city="ngModel" -->
+            <!-- (change)="changeCity(city.value)" -->
           </div>
           <div class="col">
-            <select id="inputState" class="form-control">
+            <select
+              id="inputState"
+              name="town"
+              [ngModel]="town"
+              (ngModelChange)="getZipCode($event)"
+              class="form-control"
+            >
               <option selected>請選擇區域</option>
-              <option>...</option>
+              <option *ngFor="let area of this.areas" [ngValue]="area">{{
+                area[0]
+              }}</option>
             </select>
           </div>
           <div class="col">

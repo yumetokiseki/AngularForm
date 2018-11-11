@@ -14,6 +14,9 @@ export class SignupComponent implements OnInit {
   cityTownAreaSource;
 
   citys;
+  areas;
+
+  zipcode;
 
   ngOnInit() {
     this.loadData();
@@ -22,11 +25,35 @@ export class SignupComponent implements OnInit {
   loadData() {
     this.http.get('/assets/data/cityarea.json').subscribe(data => {
       this.cityTownAreaSource = data;
-      this.citys = Object.keys(data);
+      this.citys = Object.keys(this.cityTownAreaSource);
 
       // console.log(data);
-      console.log(this.citys);
+      // console.log(this.citys);
     });
+  }
+
+  getZipCode(town) {
+    console.log(town);
+    console.log(town[1]);
+    this.zipcode = town[1];
+  }
+
+  // 方法一
+  // changeCity(event) {
+  //   this.areas = this.cityTownAreaSource[event.target.value];
+  //   console.log(this.areas);
+  // }
+
+  // 方法二
+  // changeCity(city) {
+  //   this.areas = this.cityTownAreaSource[city];
+  //   console.log(this.areas);
+  // }
+
+  // 方法三
+  changeCity(city) {
+    this.areas = Object.entries(this.cityTownAreaSource[city]);
+    console.log(this.areas);
   }
 
   submitForm(f) {
