@@ -17,6 +17,7 @@
       {{ personName.errors | json }}
       <div>invalid: {{ personName.invalid | json }}</div>
       <div>value: {{ personName.value | json }}</div>
+      <span *ngIf="personName.hasError('required')">必須填入姓名!</span>
     </div>
   </div>
   <div class="form-group row">
