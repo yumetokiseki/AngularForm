@@ -1,7 +1,7 @@
 <h1>註冊畫面</h1>
 {{ f.value | json }} {{ f.invalid | json }}
 <button (click)="f.reset({ personName: 'table' })">reset form</button>
-<form #f="ngForm">
+<form #f="ngForm" (ngSubmit)="submitForm(f)" novalidate>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">姓名</label>
     <div class="col-sm-10">
@@ -13,11 +13,16 @@
         class="form-control"
         placeholder="姓名 (必填)"
         required
+        minlength="2"
       />
-      {{ personName.errors | json }}
+      <div>Errors:{{ personName.errors | json }}</div>
+      <div>
+        getErrors('minlength'): {{ personName.getError('minlength') | json }}
+      </div>
       <div>invalid: {{ personName.invalid | json }}</div>
       <div>value: {{ personName.value | json }}</div>
       <span *ngIf="personName.hasError('required')">必須填入姓名!</span>
+      <span *ngIf="personName.hasError('minlength')">至少寫入2個字吧</span>
     </div>
   </div>
   <div class="form-group row">
