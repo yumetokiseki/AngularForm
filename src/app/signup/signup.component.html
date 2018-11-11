@@ -1,5 +1,8 @@
 <h1>註冊畫面</h1>
-{{ f.value | json }} {{ f.invalid | json }}
+<div>取得表單: {{ f.value | json }}</div>
+<div>取得所有(包含disable): {{ f.form.getRawValue() | json }}</div>
+<div>invalid: {{ f.invalid | json }}</div>
+
 <button (click)="f.reset({ personName: 'table' })">reset form</button>
 <form #f="ngForm" (ngSubmit)="submitForm(f)" novalidate>
   <div class="form-group row">
@@ -35,6 +38,7 @@
         class="form-control"
         placeholder="Email (必填)"
         required
+        disabled
       />
     </div>
   </div>
@@ -47,6 +51,9 @@
           type="checkbox"
           value=""
           id="defaultCheck1"
+          ngModel
+          name="send"
+          #send="ngModel"
         />
         <label class="form-check-label" for="defaultCheck1">
           寄送產品型錄
@@ -54,67 +61,72 @@
       </div>
     </div>
   </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">地址類別</label>
-    <div class="col-sm-10">
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="addressType"
-          value="home"
-          checked
-        />
-        <label class="form-check-label" for="inlineRadio1">住家</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="addressType"
-          value="office"
-        />
-        <label class="form-check-label" for="inlineRadio2">公司</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="addressType"
-          value="other"
-        />
-        <label class="form-check-label" for="inlineRadio3">其他</label>
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label"
-      >縣市區域、郵遞區號</label
-    >
-    <div class="col-sm-10">
-      <div class="row">
-        <div class="col">
-          <select id="inputState" class="form-control">
-            <option selected>請選擇縣市</option>
-            <option>...</option>
-          </select>
+  <ng-container *ngIf="send.value">
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-2 col-form-label"
+        >地址類別</label
+      >
+      <div class="col-sm-10">
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="addressType"
+            value="home"
+            checked
+          />
+          <label class="form-check-label" for="inlineRadio1">住家</label>
         </div>
-        <div class="col">
-          <select id="inputState" class="form-control">
-            <option selected>請選擇區域</option>
-            <option>...</option>
-          </select>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="addressType"
+            value="office"
+          />
+          <label class="form-check-label" for="inlineRadio2">公司</label>
         </div>
-        <div class="col">
-          <input type="text" class="form-control" placeholder="郵遞區號" />
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="addressType"
+            value="other"
+          />
+          <label class="form-check-label" for="inlineRadio3">其他</label>
         </div>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">地址</label>
-    <div class="col-sm-10"><input type="text" class="form-control" /></div>
-  </div>
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label"
+        >縣市區域、郵遞區號</label
+      >
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col">
+            <select id="inputState" class="form-control">
+              <option selected>請選擇縣市</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="col">
+            <select id="inputState" class="form-control">
+              <option selected>請選擇區域</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="郵遞區號" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">地址</label>
+      <div class="col-sm-10"><input type="text" class="form-control" /></div>
+    </div>
+  </ng-container>
+
   <button type="submit" class="btn btn-primary" [disabled]="f.invalid">
     送出
   </button>
